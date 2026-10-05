@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    gateway:
+      routes:
+
+        - id: product-service
+          uri: lb://PRODUCT
+          predicates:
+            - Path=/products/**
+
+        - id: payment-service
+          uri: lb://PAYMENT
+          predicates:
+            - Path=/payment/**
+
+        - id: order-service
+          uri: lb://ORDER
+          predicates:
+            - Path=/orders/**
+
+        - id: order-create
+          uri: lb://ORDER
+          predicates:
+            - Path=/order
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
+
+  instance:
+    hostname: gateway
+    prefer-ip-address: false
