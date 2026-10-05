@@ -1,0 +1,27 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: order
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/jdbc_schema
+    username: user
+    password: secret
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  sql:
+    init:
+      mode: always
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: false
